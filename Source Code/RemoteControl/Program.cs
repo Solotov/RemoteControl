@@ -82,6 +82,7 @@ namespace RemoteControl
             client.DownloadString(link + "/save_img.php?img="+g_str);
 
             File.Delete("tmp_img.png");
+            
         }
 
         static void JdF(string link, string ext)

