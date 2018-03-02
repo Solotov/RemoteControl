@@ -1,9 +1,29 @@
 <?php
 	include("include/settings.php");
 	
+	if(isset($_GET["pwd"])) {
+		if($_GET["pwd"] == $admin) {}
+		else {
+			die;
+		}
+	} else {
+		die;
+	}
+	
 	$status = "";
 	
 	$conn = new mysqli($host, $user, $pass, "controler");
+	
+	if(isset($_POST["delete_all"])) {
+		$sql = 'DELETE FROM `task_all`';
+		$conn->query($sql);
+	} else if(isset($_POST["delete_to"])) {
+		$sql = 'DELETE FROM `task_to`';
+		$conn->query($sql);
+	} else if(isset($_POST["delete_sh"])) {
+		$sql = 'DELETE FROM `screenshot`';
+		$conn->query($sql);
+	}
 	
 	$sql = "SELECT COUNT(*) FROM `user`";
 	$result = $conn->query($sql);
@@ -27,8 +47,22 @@
 	<body>
 		<div class="menu">
 			<div class="right">
-				<a href="new_task.php"><button class="green-bt">Add task</button></a>
-				<a href="del_task.php"><button class="red-bt">Delete task`s</button></a>
+				<form action="new_task.php" method="post">
+				<input type="hidden" name="pwd" value="<?php echo $_GET["pwd"]; ?>">
+					<button class="green-bt" type="submit">Add task</button>
+				</form>
+				<form method="post">
+					<input type="hidden" name="delete_all" value="1">
+					<button class="red-bt">Delete task`s (<b>all</b> user)</button>
+				</form>
+				<form method="post">
+					<input type="hidden" name="delete_to" value="1">
+					<button class="red-bt">Delete task`s (<b>some</b> user)</button>
+				</form>
+				<form method="post">
+					<input type="hidden" name="delete_sh" value="1">
+					<button class="red-bt">Delete <b>all</b> screenshot</button>
+				</form>
 			</div>
 		</div>
 		<div class="content">
@@ -88,10 +122,16 @@
 											print 'No screenshot';
 											break;
 										}
-										print '<a href="'.$sh[$nc].'" target="_blank"> Img'.$nc.'</a>';
+										print '<a href="'.$sh[$nc].'" target="_blank"> Img'.$nc.' </a>';
 									}
 									print '</td>
-									<td class="cell100 column5"><form action="new_task.php" method="post"><input type="hidden" name="id" value="'.$a.'"><button class="green-bt">Add task</button></form></td>
+									<td class="cell100 column5">
+										<form action="new_task.php" method="post">
+											<input type="hidden" name="pwd" value="'.$_GET["pwd"].'">
+											<input type="hidden" name="id" value="'.$a.'">
+											<button class="green-bt" type="submit">Add task</button>
+										</form>
+									</td>
 									</tr>';
 								}
 							}
