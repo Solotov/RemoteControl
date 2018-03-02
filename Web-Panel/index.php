@@ -46,22 +46,24 @@
 	</head>
 	<body>
 		<div class="menu">
-			<div class="right">
+			<div class="right" style="display: flex;">
 				<form action="new_task.php" method="post">
 				<input type="hidden" name="pwd" value="<?php echo $_GET["pwd"]; ?>">
 					<button class="green-bt" type="submit">Add task</button>
 				</form>
 				<form method="post">
 					<input type="hidden" name="delete_all" value="1">
-					<button class="red-bt">Delete task`s (<b>all</b> user)</button>
+					<button class="red-bt" style="margin-left: 5px;">Delete task`s (<b>all</b> user)</button>
 				</form>
+				
 				<form method="post">
 					<input type="hidden" name="delete_to" value="1">
-					<button class="red-bt">Delete task`s (<b>some</b> user)</button>
+					<button class="red-bt" style="margin-left: 5px;">Delete task`s (<b>some</b> user)</button>
 				</form>
+				
 				<form method="post">
 					<input type="hidden" name="delete_sh" value="1">
-					<button class="red-bt">Delete <b>all</b> screenshot</button>
+					<button class="red-bt" style="margin-left: 5px;">Delete <b>all</b> screenshot</button>
 				</form>
 			</div>
 		</div>
