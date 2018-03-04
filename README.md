@@ -1,3 +1,12 @@
+### Index
+![](https://i.imgur.com/n7Z6iomg.png)
+
+### List of task
+![](https://i.imgur.com/XmeHnOvg.png)
+
+### Create task form
+![](https://i.imgur.com/kr7XR52g.png)
+
 # RemoteControl
 Control you PC from web-panel.
 
